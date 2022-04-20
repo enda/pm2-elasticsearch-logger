@@ -20,8 +20,7 @@
     "elasticUrl": "http://localhost:9200",
     "index": "pm2",
     "type": "pm2",
-    "host": "",
-    "insecure": false
+    "host": ""
   },
   "apps": [
     {
@@ -36,13 +35,13 @@
   },
   "homepage": "https://github.com/hobbyquaker/pm2-elasticsearch-logger#readme",
   "dependencies": {
+    "elasticsearch": "^16.7.3",
     "pm2": "latest",
-    "pmx": "latest",
-    "request": "^2.88.0"
+    "pmx": "latest"
   },
   "devDependencies": {
     "camo-purge": "^1.0.2",
-    "xo": "^0.24.0"
+    "xo": "^0.48.0"
   },
   "xo": {
     "space": 4
