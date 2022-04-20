@@ -32,7 +32,10 @@ pmx.initModule({}, (err, conf) => {
       source,
       id: msg.process.pm_id,
       process: msg.process.name,
-      message: msg.data
+      message: msg.data.replace(
+        /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+        '',
+      ),
     };
 
     const body = JSON.stringify(data);
