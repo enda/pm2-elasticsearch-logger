@@ -1,6 +1,6 @@
 {
   "name": "pm2-elasticsearch-logger2",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Send PM2 logs to Elasticsearch",
   "main": "index.js",
   "scripts": {
