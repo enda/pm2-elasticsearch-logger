@@ -9,7 +9,7 @@ pmx.initModule({}, (err, conf) => {
   }
 
   const config = {
-    index: conf.index || 'pm2',
+    index: conf.index || 'pm2-logs',
     type: conf.type || 'pm2',
     host: conf.host || os.hostname(),
     elasticUrl: conf.elasticUrl || 'http://localhost:9200',
@@ -20,12 +20,9 @@ pmx.initModule({}, (err, conf) => {
   });
 
   let url;
-  let currentDate;
   let index;
 
   function log(source, msg) {
-    const d = new Date();
-
     const data = {
       '@timestamp': d.toISOString(),
       host: config.host,
@@ -40,14 +37,8 @@ pmx.initModule({}, (err, conf) => {
 
     const body = JSON.stringify(data);
 
-    const date = d.getDate();
-    if (date !== currentDate) {
-      index = `${config.index}-${d.getFullYear()}.${('0' + (d.getMonth() + 1)).substr(-2)}.${('0' + date).substr(-2)}`;
-      currentDate = date;
-    }
-
     client.index({
-      index: index,
+      index: config.index,
       type: config.type,
       body,
     });
