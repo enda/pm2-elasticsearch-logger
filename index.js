@@ -30,7 +30,7 @@ pmx.initModule({}, (err, conf) => {
       '@timestamp': d.toISOString(),
       host: config.host,
       source,
-      id: msg.process.pm_id,
+      id: `${msg.process.pm_id}`,
       process: msg.process.name,
       message: msg.data.replace(
         /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
