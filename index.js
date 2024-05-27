@@ -23,6 +23,8 @@ pmx.initModule({}, (err, conf) => {
   let index;
 
   function log(source, msg) {
+    const d = new Date();
+
     const data = {
       '@timestamp': d.toISOString(),
       host: config.host,
