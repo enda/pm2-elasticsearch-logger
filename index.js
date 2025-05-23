@@ -2,6 +2,7 @@ const os = require('os');
 const pmx = require('pmx');
 const pm2 = require('pm2');
 const elasticsearch = require('elasticsearch');
+const { Client } = require('es8');
 
 pmx.initModule({}, (err, conf) => {
   if (err) {
@@ -10,12 +11,15 @@ pmx.initModule({}, (err, conf) => {
 
   const config = {
     index: conf.index || 'pm2-logs',
-    type: conf.type || 'pm2',
+    type: conf.type || '_doc',
     host: conf.host || os.hostname(),
-    elasticUrl: conf.elasticUrl || 'http://localhost:9200',
+    nodes: (conf.elasticUrl && conf.elasticUrl.split(',')) || ['http://localhost:9200'],
+    auth: conf.username || conf.password
+      ? { username: conf.username, password: conf.password }
+      : null,
   };
 
-  const client = new elasticsearch.Client({
+  const cli = new Client({
     host: config.elasticUrl.split(','),
   });
 
@@ -39,7 +43,7 @@ pmx.initModule({}, (err, conf) => {
 
     const body = JSON.stringify(data);
 
-    client.index({
+    cli.index({
       index: config.index,
       type: config.type,
       body,

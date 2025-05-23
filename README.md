@@ -27,9 +27,10 @@ PM2 will automatically restart the module after changing an option.
 | ------ | --------- | ------- |
 | elasticUrl | URL of Elasticsearch API | `http://localhost:9200` |
 | index | Elasticsearch index to use | `pm2` |
-| type | Document type to use | `pm2` |
+| type | Document type to use | `_doc` |
 | host | `host` attribute of the document | `os.hostname()` |
-
+| username | `username` used for basic auth |
+| password | `password` used for basic auth |
 
 ## Todo, Ideas
 

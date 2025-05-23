@@ -24,6 +24,7 @@
   },
   "apps": [
     {
+      "max_memory_restart": "200M",
       "name": "pm2-elasticsearch-logger",
       "script": "index.js"
     }
@@ -35,7 +36,7 @@
   },
   "homepage": "https://github.com/enda/pm2-elasticsearch-logger#readme",
   "dependencies": {
-    "elasticsearch": "^16.7.3",
+    "es8": "npm:@elastic/elasticsearch@^8.18.2",
     "pm2": "latest",
     "pmx": "latest"
   },
