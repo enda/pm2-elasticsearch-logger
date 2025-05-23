@@ -20,7 +20,8 @@ pmx.initModule({}, (err, conf) => {
   };
 
   const cli = new Client({
-    host: config.elasticUrl.split(','),
+    nodes: config.nodes,
+    auth: config.auth,
   });
 
   let url;
