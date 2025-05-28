@@ -1,7 +1,6 @@
 const os = require('os');
 const pmx = require('pmx');
 const pm2 = require('pm2');
-const elasticsearch = require('elasticsearch');
 const { Client } = require('es8');
 
 pmx.initModule({}, (err, conf) => {
@@ -18,10 +17,10 @@ pmx.initModule({}, (err, conf) => {
     : null,
   };
 
-  let auth;
+  let auth, credentials, node;
 
   if (!config.auth) {
-    let [credentials, node] = config.node.split('@');
+    [credentials, node] = config.node.split('@');
 
     if (!node) {
       node = credentials;
@@ -36,7 +35,11 @@ pmx.initModule({}, (err, conf) => {
     }
   } else {
     auth = config.auth;
-    node = config.node;
+    let node = config.node;
+  }
+
+  if (!node.startsWith('http')) {
+    node = `http://${node}`;
   }
 
   const cli = new Client({
