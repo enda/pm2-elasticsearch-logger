@@ -11,17 +11,37 @@ pmx.initModule({}, (err, conf) => {
 
   const config = {
     index: conf.index || 'pm2-logs',
-    type: conf.type || '_doc',
     host: conf.host || os.hostname(),
-    nodes: (conf.elasticUrl && conf.elasticUrl.split(',')) || ['http://localhost:9200'],
-    auth: conf.username || conf.password
+    node: conf.elasticUrl || 'http://localhost:9200',
+    auth: conf.username && conf.password
       ? { username: conf.username, password: conf.password }
-      : null,
+    : null,
   };
 
+  let auth;
+
+  if (!config.auth) {
+    let [credentials, node] = config.node.split('@');
+
+    if (!node) {
+      node = credentials;
+      credentials = null;
+    }
+
+    if (credentials) {
+      auth = {
+        username: credentials.split(':')[0],
+        password: credentials.split(':')[1],
+      };
+    }
+  } else {
+    auth = config.auth;
+    node = config.node;
+  }
+
   const cli = new Client({
-    nodes: config.nodes,
-    auth: config.auth,
+    node,
+    auth,
   });
 
   let url;
@@ -42,12 +62,12 @@ pmx.initModule({}, (err, conf) => {
       ),
     };
 
-    const body = JSON.stringify(data);
+    const document = JSON.stringify(data);
 
     cli.index({
       index: config.index,
-      type: config.type,
-      body,
+      id: `${msg.process.pm_id}`,
+      document,
     });
   }
 
