@@ -45,6 +45,9 @@ pmx.initModule({}, (err, conf) => {
   const cli = new Client({
     node,
     auth,
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 
   let url;
