@@ -1,6 +1,6 @@
 {
   "name": "pm2-elasticsearch-logger2",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Send PM2 logs to Elasticsearch",
   "main": "index.js",
   "scripts": {
@@ -35,7 +35,7 @@
   },
   "homepage": "https://github.com/enda/pm2-elasticsearch-logger#readme",
   "dependencies": {
-    "es8": "npm:@elastic/elasticsearch@^8.0.0",
+    "@elastic/elasticsearch":"^8.0.0",
     "pm2": "latest",
     "pmx": "latest"
   },

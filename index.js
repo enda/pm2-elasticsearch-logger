@@ -1,7 +1,7 @@
 const os = require('os');
 const pmx = require('pmx');
 const pm2 = require('pm2');
-const { Client } = require('es8');
+const { Client } = require('@elastic/elasticsearch');
 
 pmx.initModule({}, (err, conf) => {
   if (err) {
@@ -45,9 +45,6 @@ pmx.initModule({}, (err, conf) => {
   const cli = new Client({
     node,
     auth,
-    headers: {
-      'Content-Type': 'application/json',
-    },
   });
 
   let url;
@@ -56,11 +53,11 @@ pmx.initModule({}, (err, conf) => {
   function log(source, msg) {
     const d = new Date();
 
-    const data = {
+    const document = {
       '@timestamp': d.toISOString(),
       host: config.host,
-      source,
       id: `${msg.process.pm_id}`,
+      source,
       process: msg.process.name,
       message: msg.data.replace(
         /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
@@ -68,12 +65,11 @@ pmx.initModule({}, (err, conf) => {
       ),
     };
 
-    const document = JSON.stringify(data);
-
     cli.index({
       index: config.index,
       id: `${msg.process.pm_id}`,
       document,
+      op_type: 'create',
     });
   }
 
