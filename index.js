@@ -35,7 +35,7 @@ pmx.initModule({}, (err, conf) => {
     }
   } else {
     auth = config.auth;
-    let node = config.node;
+    node = config.node;
   }
 
   if (!node.startsWith('http')) {
