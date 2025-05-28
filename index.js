@@ -67,7 +67,6 @@ pmx.initModule({}, (err, conf) => {
 
     cli.index({
       index: config.index,
-      id: `${msg.process.pm_id}`,
       document,
       op_type: 'create',
     });
